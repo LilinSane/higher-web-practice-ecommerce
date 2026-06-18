@@ -21,6 +21,15 @@
       "language": "ru",
       "notifyByEmail": false,
       "createdAt": "2026-03-02T10:00:00Z"
+    },
+    {
+      "firstName": "Meytner",
+      "lastName": "Insane",
+      "email": "meytner@gmail.com",
+      "password": "123123",
+      "confirmPassword": "123123",
+      "createdAt": "2026-06-09T08:04:43.373Z",
+      "id": "86fd2770-13f4-4102-976b-4a89c13a46ba"
     }
   ],
   "products": [
@@ -674,17 +683,158 @@
         "phone": "+79998887766"
       },
       "createdAt": "2026-03-09T14:20:00Z"
+    },
+    {
+      "id": "d731058c-ca43-48ee-9f7c-54fb49a4f47b",
+      "number": "ЗАКАЗ-1781773804742",
+      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
+      "status": "pending",
+      "items": [
+        {
+          "productId": "3e6e9a7a-0a5f-4e2d-9b0a-2e8d6e4c1a01",
+          "name": "Председатель",
+          "image": "/mustashes/chairman/0.png",
+          "price": 5590,
+          "quantity": 5
+        },
+        {
+          "productId": "6a1c2d3e-4f50-4a61-8b72-9c83ad94be02",
+          "name": "Джентльмен",
+          "image": "/mustashes/gentelmen/0.png",
+          "price": 1790,
+          "quantity": 1
+        }
+      ],
+      "totalPrice": 29740,
+      "paymentMethod": "card_online",
+      "deliveryMethod": "courier",
+      "deliveryAddress": {
+        "country": "Россия",
+        "city": "Москва",
+        "street": "Ленина",
+        "house": "10",
+        "apartment": "12"
+      },
+      "customer": {
+        "firstName": "Иван",
+        "lastName": "Петров",
+        "email": "ivan@example.com",
+        "phone": "+7 (981) 111-11-11"
+      },
+      "createdAt": "2026-06-18T09:10:04.742Z",
+      "comment": "Если в комплекте есть инструкция «как выглядеть уверенно», буду благодарен."
+    },
+    {
+      "id": "1c8e04fe-f4f0-4fb0-95be-46e9d6c944e5",
+      "number": "ЗАКАЗ-1781777582334",
+      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
+      "status": "pending",
+      "items": [
+        {
+          "productId": "51617283-94a5-4eaf-9b42-3ec7d8ef1021",
+          "name": "Мореплаватель",
+          "image": "/mustashes/navigator/0.png",
+          "price": 1590,
+          "quantity": 1
+        },
+        {
+          "productId": "61728394-a5b6-4fb0-8c53-4fd8ef102132",
+          "name": "Пустынные",
+          "image": "/mustashes/sand/0.png",
+          "price": 1690,
+          "quantity": 1
+        },
+        {
+          "productId": "728394a5-b6c7-40c1-9d64-50e9f1021323",
+          "name": "Горец",
+          "image": "/mustashes/highlander/0.png",
+          "price": 1490,
+          "quantity": 1
+        },
+        {
+          "productId": "8394a5b6-c7d8-41d2-8e75-61fa02132434",
+          "name": "Урбан",
+          "image": "/mustashes/urban/0.png",
+          "price": 590,
+          "quantity": 1
+        }
+      ],
+      "totalPrice": 5360,
+      "paymentMethod": "card_online",
+      "deliveryMethod": "pickup_point",
+      "pickupPointId": "5a6b7c8d-9e0f-4a1b-8c2d-3e4f5a9c8001",
+      "customer": {
+        "firstName": "Иван",
+        "lastName": "Петров",
+        "email": "ivan@example.com",
+        "phone": "+7 (981) 111-11-11"
+      },
+      "createdAt": "2026-06-18T10:13:02.334Z",
+      "comment": ""
+    },
+    {
+      "id": "d0e3edfe-a9eb-46b6-8b66-703aeb67bb5d",
+      "number": "ЗАКАЗ-1781794198736",
+      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
+      "status": "pending",
+      "items": [
+        {
+          "productId": "d38fa49a-b50b-4c28-9d7e-b61c2d3e4f09",
+          "name": "Злодей",
+          "image": "/mustashes/villian/0.png",
+          "price": 1490,
+          "quantity": 3
+        }
+      ],
+      "totalPrice": 4470,
+      "paymentMethod": "card_2",
+      "deliveryMethod": "pickup_point",
+      "pickupPointId": "5a6b7c8d-9e0f-4a1b-8c2d-3e4f5a9c8001",
+      "customer": {
+        "firstName": "Иван",
+        "lastName": "Петров",
+        "email": "ivan@example.com",
+        "phone": "+7 (981) 111-11-11"
+      },
+      "createdAt": "2026-06-18T14:49:58.736Z",
+      "comment": "Надеюсь что с этими усами я буду выглядеть сногсшибательно"
+    },
+    {
+      "id": "c96baa5b-1404-4482-b83d-220cae997079",
+      "number": "ЗАКАЗ-1781799603344",
+      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
+      "status": "pending",
+      "items": [
+        {
+          "productId": "3e6e9a7a-0a5f-4e2d-9b0a-2e8d6e4c1a01",
+          "name": "Председатель",
+          "image": "/mustashes/chairman/0.png",
+          "price": 5590,
+          "quantity": 3
+        },
+        {
+          "productId": "b16d7283-94a5-4f16-9d27-e938fa49ab07",
+          "name": "Пионер авиации",
+          "image": "/mustashes/aviator/0.png",
+          "price": 3490,
+          "quantity": 3
+        }
+      ],
+      "totalPrice": 27240,
+      "paymentMethod": "card_2",
+      "deliveryMethod": "pickup_point",
+      "pickupPointId": "5a6b7c8d-9e0f-4a1b-8c2d-3e4f5a9c8001",
+      "customer": {
+        "firstName": "Иван",
+        "lastName": "Петров",
+        "email": "ivan@example.com",
+        "phone": "+7 (981) 111-11-11"
+      },
+      "createdAt": "2026-06-18T16:20:03.344Z",
+      "comment": ""
     }
   ],
   "ratings": [
-    {
-      "id": "a3e2c1b0-9f8e-4d7c-8b6a-5c4d3e2f1a00",
-      "productId": "3e6e9a7a-0a5f-4e2d-9b0a-2e8d6e4c1a01",
-      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
-      "userName": "Иван П.",
-      "rating": 5,
-      "createdAt": "2026-03-05T12:00:00Z"
-    },
     {
       "id": "b4f3d2c1-a09f-4e8d-9c7b-6d5e4f3a2b11",
       "productId": "3e6e9a7a-0a5f-4e2d-9b0a-2e8d6e4c1a01",
@@ -710,20 +860,44 @@
       "createdAt": "2026-03-06T12:35:00Z"
     },
     {
-      "id": "e7c6a5f4-d32c-41b0-8f0e-9a8b7c6d5e44",
-      "productId": "c27e8394-a5b6-4a17-8b3f-a49ab50b1c08",
-      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
-      "userName": "Иван П.",
-      "rating": 4,
-      "createdAt": "2026-03-08T19:10:00Z"
-    },
-    {
       "id": "f8d7b6a5-e43d-42c1-9a1f-0b9c8d7e6f55",
       "productId": "8394a5b6-c7d8-41d2-8e75-61fa02132434",
       "userId": "1a0d9c3c-6b6f-4c6a-9e7a-5b7c2a8e4d22",
       "userName": "Анна С.",
       "rating": 3,
       "createdAt": "2026-03-09T16:00:00Z"
+    },
+    {
+      "productId": "c27e8394-a5b6-4a17-8b3f-a49ab50b1c08",
+      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
+      "rating": 4,
+      "userName": "Иван П.",
+      "id": "4ef1dc14-fdd1-4377-b9a3-f4aed31d7e3a",
+      "createdAt": "2026-06-17T07:17:37.518Z"
+    },
+    {
+      "productId": "a05f6172-8394-4e05-8f16-d827e938fa06",
+      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
+      "rating": 5,
+      "userName": "Иван П.",
+      "id": "b681bfd5-ea8c-41ee-8551-a0353dea8069",
+      "createdAt": "2026-06-17T11:27:48.847Z"
+    },
+    {
+      "productId": "3e6e9a7a-0a5f-4e2d-9b0a-2e8d6e4c1a01",
+      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
+      "rating": 5,
+      "userName": "Иван П.",
+      "id": "9b994088-57e0-4dd6-9528-2c08efd8a594",
+      "createdAt": "2026-06-17T11:30:20.681Z"
+    },
+    {
+      "productId": "61728394-a5b6-4fb0-8c53-4fd8ef102132",
+      "userId": "8f6b1a1e-7d1d-4b2c-9c6c-1c5f3c9c1a11",
+      "rating": 5,
+      "userName": "Иван П.",
+      "id": "71820114-46e5-4497-9394-742fe50139ea",
+      "createdAt": "2026-06-18T10:13:17.160Z"
     }
   ],
   "pickupPoints": [
