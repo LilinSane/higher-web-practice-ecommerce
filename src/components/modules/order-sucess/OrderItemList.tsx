@@ -25,7 +25,7 @@ export function OrderItemsList({ items }: OrderItemsListProps) {
 
                         <div className="flex items-center gap-2 text-sm text-gray-700">
                             <span className="font-bold text-gray-900">
-                                {(item.price * item.quantity).toLocaleString()} ₽
+                                {(item.price * item.quantity).toLocaleString('ru-RU')} ₽
                             </span>
                             <span className="text-gray-400">•</span>
                             <span className="text-gray-600">{item.quantity} шт.</span>

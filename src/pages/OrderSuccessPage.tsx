@@ -69,7 +69,7 @@ export function OrderSuccessPage() {
                     <div>
                         <h3 className="text-sm font-normal text-gray-500 mb-1">Общая сумма</h3>
                         <span
-                            className="font-bold text-gray-900 text-2xl">{lastOrder.totalPrice.toLocaleString()} ₽</span>
+                            className="font-bold text-gray-900 text-2xl">{lastOrder.totalPrice.toLocaleString('ru-RU')} ₽</span>
                     </div>
                     <div>
                         <h3 className="text-sm font-normal text-gray-500 mb-1">{

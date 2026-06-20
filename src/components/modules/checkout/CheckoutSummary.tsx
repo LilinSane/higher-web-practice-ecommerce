@@ -21,7 +21,7 @@ export function CheckoutSummary({totalItems, totalPrice, onSubmit, isFormValid}:
             <div className="flex justify-between text-sm text-gray-500">
                 <span>Сумма заказа</span>
                 <span className="text-[#10B981] font-bold text-lg">
-                    {totalPrice.toLocaleString()} ₽
+                    {totalPrice.toLocaleString('ru-RU')} ₽
                 </span>
             </div>
 
@@ -35,7 +35,7 @@ export function CheckoutSummary({totalItems, totalPrice, onSubmit, isFormValid}:
             <div className="flex justify-between text-sm text-gray-500 border-t border-gray-200">
                 <span>Итого</span>
                 <span className="text-[#10B981] font-bold text-lg">
-                    {totalPrice.toLocaleString()} ₽
+                    {totalPrice.toLocaleString('ru-RU')} ₽
                 </span>
             </div>
 

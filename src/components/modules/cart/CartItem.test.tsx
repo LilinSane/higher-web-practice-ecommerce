@@ -42,7 +42,7 @@ describe("CartItem Component", () => {
 
         expect(screen.getByText("Председатель")).toBeInTheDocument();
         expect(screen.getByText("2")).toBeInTheDocument();
-        expect(screen.getByText("11 180 ₽")).toBeInTheDocument();
+        expect(screen.getByText(/11.*180.*₽/)).toBeInTheDocument();
     });
 
     it("должен вызывать update мутацию с увеличенным количеством при клике на плюс", () => {

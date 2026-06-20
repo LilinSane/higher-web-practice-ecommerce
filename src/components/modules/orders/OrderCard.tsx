@@ -29,7 +29,7 @@ export function OrderCard({order}: OrderCardProps) {
                     </span>
                     <span>{order.number}</span>
                 </div>
-                <div className="font-bold text-lg">{order.totalPrice.toLocaleString()} ₽</div>
+                <div className="font-bold text-lg">{order.totalPrice.toLocaleString('ru-RU')} ₽</div>
             </div>
 
             <div className="flex justify-between items-center mb-6">
@@ -71,7 +71,7 @@ export function OrderCard({order}: OrderCardProps) {
                                 </div>
 
                                 <div className="font-bold text-gray-900">
-                                    {item.price.toLocaleString()} ₽
+                                    {item.price.toLocaleString('ru-RU')} ₽
                                 </div>
                             </div>
                         ))}

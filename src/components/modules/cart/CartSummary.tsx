@@ -23,7 +23,7 @@ export function CartSummary({totalItems, totalPrice, isFormValid}: CartSummaryPr
             <div className="flex justify-between text-sm text-gray-500">
                 <span>Сумма заказа</span>
                 <span className="text-[#10B981] font-bold text-lg">
-                    {totalPrice.toLocaleString()} ₽
+                    {totalPrice.toLocaleString('ru-RU')} ₽
                 </span>
             </div>
 
