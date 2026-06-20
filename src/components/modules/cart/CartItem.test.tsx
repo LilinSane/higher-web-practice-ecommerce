@@ -19,12 +19,12 @@ jest.mock("@/api/cartApi", () => ({
 
 const mockItem = {
     id: "cart-entry-1",
-    productId: "prod-100",
-    price: 1500,
+    productId: "3e6e9a7a-0a5f-4e2d-9b0a-2e8d6e4c1a01",
+    price: 5590,
     quantity: 2,
     product: {
-        name: "Шикарные накладные усы",
-        images: ["https://example.com/mustache.png"],
+        name: "Председатель",
+        images: ["/mustashes/chairman/0.png"],
     },
 };
 
@@ -40,9 +40,9 @@ describe("CartItem Component", () => {
             </BrowserRouter>
         );
 
-        expect(screen.getByText("Шикарные накладные усы")).toBeInTheDocument();
+        expect(screen.getByText("Председатель")).toBeInTheDocument();
         expect(screen.getByText("2")).toBeInTheDocument();
-        expect(screen.getByText("3 000 ₽")).toBeInTheDocument();
+        expect(screen.getByText("11 180 ₽")).toBeInTheDocument();
     });
 
     it("должен вызывать update мутацию с увеличенным количеством при клике на плюс", () => {
