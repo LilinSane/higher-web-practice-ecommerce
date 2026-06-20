@@ -2,9 +2,9 @@ import {HeadingText} from "@/components/ui/base/text/HeadingText.tsx";
 import {CommonInput} from "@/components/ui/base/inputs/CommonInput.tsx";
 import {Button} from "@/components/ui/lib/button.tsx";
 import ArrowIcon from '@/assets/Arrow.svg?react';
-import React from "react";
+import React, {useState} from "react";
 import {composeValidators, validateEmail, validatePassword, validateRequired} from "@/utils/validation.ts";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "@/store/store.ts";
 import {useLoginMutation} from "@/api/authApi.ts";
 import {useFormErrors} from "@/hooks/useFormErrors.ts";
@@ -19,7 +19,8 @@ interface LoginFormProps {
 export function LoginForm({ onBack }: LoginFormProps) {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [login, { isLoading, error: apiError }] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
+    const [submitError, setSubmitError] = useState<string | null>(null);
     const { errors, setErrors, clearError } = useFormErrors<Record<string, string | null>>({
         email: null,
         password: null
@@ -45,9 +46,9 @@ export function LoginForm({ onBack }: LoginFormProps) {
             const user = await login({ email, password }).unwrap();
             dispatch(setAuthenticated(true));
             dispatch(setUserId(user.id));
-            navigate('/profile');
+            navigate('/');
         } catch (err) {
-            console.error("Login failed:", err);
+            setSubmitError(err?.data?.message || "Произошла ошибка, повторите попытку позже");
         }
     };
 
@@ -67,7 +68,9 @@ export function LoginForm({ onBack }: LoginFormProps) {
             </div>
 
             <form className="flex flex-col gap-5" onSubmit={handleSubmit} noValidate>
-                {apiError && <p className="text-red-500 text-sm">{apiError.message ? apiError.message : "Произошла ошибка, повторите попытку позже"}</p>}
+                {submitError && (
+                    <p className="text-red-500 text-sm font-medium">{submitError}</p>
+                )}
 
                 <CommonInput
                     id="email"
@@ -77,7 +80,10 @@ export function LoginForm({ onBack }: LoginFormProps) {
                     placeholder="ivanov@yandex.ru"
                     required
                     error={errors.email || undefined}
-                    onChange={() => clearError('email')}
+                    onChange={() => {
+                        clearError('email')
+                        if (submitError) setSubmitError(null);
+                    }}
                 />
 
                 <CommonInput
@@ -88,7 +94,10 @@ export function LoginForm({ onBack }: LoginFormProps) {
                     placeholder="******"
                     required
                     error={errors.password || undefined}
-                    onChange={() => clearError('password')}
+                    onChange={() => {
+                        clearError('password')
+                        if (submitError) setSubmitError(null);
+                    }}
                 />
                 <Button variant="primaryBlue" size="lg" className="w-full" disabled={isLoading}>
                     Войти
@@ -97,9 +106,9 @@ export function LoginForm({ onBack }: LoginFormProps) {
 
             <div className="mt-6 text-left text-sm">
                 <div className="text-gray-600 mb-1">У вас нет аккаунта?</div>
-                <a href="/register" className="text-blue-900 font-medium hover:underline">
+                <Link to="/register" className="text-blue-900 font-medium hover:underline">
                     Зарегистрироваться
-                </a>
+                </Link>
             </div>
         </>
     );

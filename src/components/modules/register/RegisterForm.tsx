@@ -2,8 +2,8 @@ import { HeadingText } from "@/components/ui/base/text/HeadingText.tsx";
 import { CommonInput } from "@/components/ui/base/inputs/CommonInput.tsx";
 import { Button } from "@/components/ui/lib/button.tsx";
 import ArrowIcon from '@/assets/Arrow.svg?react';
-import React from "react";
-import {useNavigate} from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "@/store/store.ts";
 import {useRegisterMutation} from "@/api/authApi.ts";
 import {
@@ -24,7 +24,8 @@ interface RegisterFormProps {
 export function RegisterForm({ onBack }: RegisterFormProps) {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [register, { isLoading, error: apiError }] = useRegisterMutation();
+    const [register, { isLoading }] = useRegisterMutation();
+    const [submitError, setSubmitError] = useState<string | null>(null);
     const { errors, setErrors, clearError } = useFormErrors<Record<string, string | null>>({
         firstName: null,
         lastName: null,
@@ -62,9 +63,9 @@ export function RegisterForm({ onBack }: RegisterFormProps) {
             const user = await register(data).unwrap();
             dispatch(setAuthenticated(true));
             dispatch(setUserId(user.id));
-            navigate('/profile');
+            navigate('/');
         } catch (err) {
-            console.error("Registration failed:", err);
+            setSubmitError(err?.data?.message || "Произошла ошибка, повторите попытку позже");
         }
     };
 
@@ -84,14 +85,36 @@ export function RegisterForm({ onBack }: RegisterFormProps) {
             </div>
 
             <form className="flex flex-col gap-5" onSubmit={handleSubmit} noValidate>
-                {apiError && <p className="text-red-500 text-sm">{apiError.message ? apiError.message : "Произошла ошибка, повторите попытку позже"}</p>}
+                {submitError && (
+                    <p className="text-red-500 text-sm font-medium">{submitError}</p>
+                )}
 
 
-                <CommonInput id="firstName" name="firstName" label="Имя" placeholder="Иван" error={errors.firstName || undefined} onChange={() => clearError('firstName')} required/>
-                <CommonInput id="lastName" name="lastName" label="Фамилия" placeholder="Иванов" error={errors.lastName || undefined} onChange={() => clearError('lastName')} required/>
-                <CommonInput id="email" name="email" label="Почта" type="email" placeholder="ivanov@yandex.ru" error={errors.email || undefined} onChange={() => clearError('email')} required/>
-                <CommonInput id="password" name="password" label="Пароль" type="password" placeholder="******" error={errors.password || undefined} onChange={() => clearError('password')} required/>
-                <CommonInput id="confirmPassword" name="confirmPassword" label="Повтор пароля" type="password" placeholder="******" error={errors.confirmPassword || undefined} onChange={() => clearError('confirmPassword')} required/>
+                <CommonInput id="firstName" name="firstName" label="Имя" placeholder="Иван"
+                             error={errors.firstName || undefined} onChange={() => {
+                    clearError('firstName')
+                    if (submitError) setSubmitError(null);
+                }} required/>
+                <CommonInput id="lastName" name="lastName" label="Фамилия" placeholder="Иванов"
+                             error={errors.lastName || undefined} onChange={() => {
+                    clearError('lastName')
+                    if (submitError) setSubmitError(null);
+                }} required/>
+                <CommonInput id="email" name="email" label="Почта" type="email" placeholder="ivanov@yandex.ru"
+                             error={errors.email || undefined} onChange={() => {
+                    clearError('email')
+                    if (submitError) setSubmitError(null);
+                }} required/>
+                <CommonInput id="password" name="password" label="Пароль" type="password" placeholder="******"
+                             error={errors.password || undefined} onChange={() => {
+                    clearError('password')
+                    if (submitError) setSubmitError(null);
+                }} required/>
+                <CommonInput id="confirmPassword" name="confirmPassword" label="Повтор пароля" type="password"
+                             placeholder="******" error={errors.confirmPassword || undefined} onChange={() => {
+                    clearError('confirmPassword')
+                    if (submitError) setSubmitError(null);
+                }} required/>
 
                 <Button variant="primaryBlue" size="lg" className="w-full mt-2" disabled={isLoading}>
                     Зарегистрироваться
@@ -100,7 +123,7 @@ export function RegisterForm({ onBack }: RegisterFormProps) {
 
             <div className="mt-6 text-left text-sm">
                 <div className="text-gray-600 mb-1">Уже есть аккаунт?</div>
-                <a href="/login" className="!text-blue-900 font-medium hover:underline">Войти</a>
+                <Link to="/login" className="!text-blue-900 font-medium hover:underline">Войти</Link>
             </div>
         </>
     );

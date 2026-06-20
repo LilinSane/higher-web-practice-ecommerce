@@ -14,7 +14,11 @@ export function ProfileMenu() {
         <div className="mb-6 w-full">
             <div className="flex flex-col gap-1">
                 {MENU_ITEMS.map((item) => {
-                    const isActive = location.pathname === item.path;
+                    const isActive = item.path === "/profile"
+                        ? location.pathname.startsWith("/profile") &&
+                        !location.pathname.startsWith("/profile/orders") &&
+                        !location.pathname.startsWith("/profile/cart")
+                        : location.pathname === item.path;
 
                     return (
                         <button

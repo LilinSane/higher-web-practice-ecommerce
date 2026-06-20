@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useCatalog } from './useCatalog';
 import catalogReducer, { initialState as catalogInitialState } from '@/store/slices/catalogSlice';
 import { catalogApi } from '@/api/catalogApi';
+import { useGetProductsQuery } from '@/api/catalogApi';
 
 jest.mock('@/api/catalogApi', () => {
     const actualApi = jest.requireActual('@/api/catalogApi');
@@ -13,7 +14,6 @@ jest.mock('@/api/catalogApi', () => {
     };
 });
 
-const { useGetProductsQuery } = require('@/api/catalogApi');
 
 const mockProducts = [
     { id: '1', price: 100, characteristics: { "категория": "Усы", "стиль": "Классика" }, rating: 5, createdAt: '2023-01-01' },
@@ -21,7 +21,7 @@ const mockProducts = [
 ];
 
 describe('useCatalog: Логика фильтрации', () => {
-    const createStore = (customState: any = {}) => configureStore({
+    const createStore = (customState = {}) => configureStore({
         reducer: {
             catalog: catalogReducer,
             [catalogApi.reducerPath]: catalogApi.reducer

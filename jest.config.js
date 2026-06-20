@@ -5,6 +5,7 @@ export default {
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
         '\\.(css|less|scss)$': 'identity-obj-proxy',
+        '\\.svg(\\?react)?$': '<rootDir>/src/svgMock.tsx',
     },
     transform: {
         '^.+\\.tsx?$': ['ts-jest', {

@@ -3,9 +3,8 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import React, {useState} from "react";
 import {HeadingText} from "@/components/ui/base/text/HeadingText.tsx";
 import meditationImage from '@/assets/meditation.png';
-import {ProfileEditForm} from "@/components/modules/profile/ProfileEditForm.tsx";
 import {useAppDispatch, useAppSelector} from "@/store/store.ts";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {clearProfile} from "@/store/slices/userSlice.ts";
 import {setAuthenticated} from "@/store/slices/authSlice.ts";
 import {Button} from "@/components/ui/lib/button.tsx";
@@ -16,9 +15,8 @@ export function ProfilePage() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const userId = useAppSelector((state) => state.user.userId);
-    const { data: user } = useGetProfileQuery(userId || '');
+    const {data: user} = useGetProfileQuery(userId || '');
 
-    const [isEditing, setIsEditing] = useState<boolean>(false);
     const [language, setLanguage] = useState<string>("none");
     const [checked, setChecked] = useState<boolean>(false);
 
@@ -41,51 +39,47 @@ export function ProfilePage() {
 
                 <HeadingText className="text-3xl mb-2 md:hidden">Мой профиль</HeadingText>
 
-                {isEditing ? (
-                    <ProfileEditForm user={user} onCancel={() => setIsEditing(false)}/>
-                ) : (
-                    <>
-                        <ProfileCard user={user} onEdit={() => setIsEditing(true)}/>
+                <ProfileCard user={user} onEdit={() => navigate('/profile/edit')}/>
 
-                        <div className="w-40">
-                            <Select value={language} onValueChange={setLanguage}>
-                                <SelectTrigger className="w-full bg-background border-input shadow-sm">
-                                    <SelectValue placeholder="Сортировка"/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="none">По умолчанию</SelectItem>
-                                    <SelectItem value="russian">Русский</SelectItem>
-                                    <SelectItem value="english_en">Английский (Англия)</SelectItem>
-                                    <SelectItem value="english_us">Английский (США)</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <label className="flex items-center gap-2 cursor-pointer text-sm">
-                            <input
-                                type="radio"
-                                checked={checked}
-                                onClick={() => setChecked(!checked)}
-                                onChange={() => null}
-                                className="text-blue-600"
-                            />
-                            Уведомлять об изменении статуса заказов по email
-                        </label>
+                <div className="w-40">
+                    <Select value={language} onValueChange={setLanguage}>
+                        <SelectTrigger className="w-full bg-background border-input shadow-sm">
+                            <SelectValue placeholder="Сортировка"/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="none">По умолчанию</SelectItem>
+                            <SelectItem value="russian">Русский</SelectItem>
+                            <SelectItem value="english_en">Английский (Англия)</SelectItem>
+                            <SelectItem value="english_us">Английский (США)</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <label className="flex items-center gap-2 cursor-pointer text-sm">
+                    <input
+                        type="radio"
+                        checked={checked}
+                        onClick={() => setChecked(!checked)}
+                        onChange={() => null}
+                        className="text-blue-600"
+                    />
+                    Уведомлять об изменении статуса заказов по email
+                </label>
 
-                        <a href="/profile/orders" className="text-blue-900 font-medium hover:underline md:hidden">
-                            История заказов
-                        </a>
-                        <div className="w-40">
-                            <Button
-                                variant="destructive"
-                                size="lg"
-                                className="w-full md:w-auto"
-                                onClick={handleLogout}
-                            >
-                                Выйти из профиля
-                            </Button>
-                        </div>
-                    </>
-                )}
+                <Link to="/profile/orders" className="text-blue-900 font-medium hover:underline md:hidden">
+                    История заказов
+                </Link>
+
+                <div className="w-40">
+                    <Button
+                        variant="destructive"
+                        size="lg"
+                        className="w-full md:w-auto"
+                        onClick={handleLogout}
+                    >
+                        Выйти из профиля
+                    </Button>
+                </div>
+
             </div>
         </div>
     );

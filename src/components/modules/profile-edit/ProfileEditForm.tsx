@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {ShadowContainer} from "@/components/ui/base/containers/ShadowContainer.tsx";
 import {CommonInput} from "@/components/ui/base/inputs/CommonInput.tsx";
 import {Button} from "@/components/ui/lib/button.tsx";
@@ -15,6 +15,7 @@ interface ProfileEditFormProps {
 
 export function ProfileEditForm({user, onCancel}: ProfileEditFormProps) {
     const [updateProfile, {isLoading}] = useUpdateProfileMutation();
+    const [submitError, setSubmitError] = useState<string | null>(null);
 
     const {errors, setErrors, clearError} = useFormErrors<Record<string, string | null>>({
         firstName: null,
@@ -47,15 +48,25 @@ export function ProfileEditForm({user, onCancel}: ProfileEditFormProps) {
             await updateProfile({id: user.id, data}).unwrap();
             onCancel();
         } catch (err) {
-            console.error("Update failed:", err);
+            setSubmitError(err?.data?.message || "Произошла ошибка, повторите попытку позже");
         }
     };
 
-    if (!user) return null;
+    if(isLoading) {
+        return (
+            <div className="max-w-md mx-auto py-16 px-4 text-center">
+                <p className="text-gray-500">Загрузка данных пользователя...</p>
+            </div>
+        );
+    }
 
     return (
         <ShadowContainer className="p-6 md:p-8">
             <form onSubmit={handleSubmit} className="flex flex-col items-center md:items-start gap-6" noValidate>
+                {submitError && (
+                    <p className="text-red-500 text-sm font-medium">{submitError}</p>
+                )}
+
                 <div
                     className="relative w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center border border-blue-200">
                     <span className="text-3xl font-bold text-blue-900">

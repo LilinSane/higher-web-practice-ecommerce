@@ -3,7 +3,6 @@ import catalogReducer, {
     resetFilters,
     setCategory,
     selectIsFiltersEmpty,
-    setSortType
 } from './catalogSlice';
 
 describe('catalogSlice', () => {

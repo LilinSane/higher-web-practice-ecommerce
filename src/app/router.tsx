@@ -15,6 +15,7 @@ import {ProductPage} from "@/pages/ProductPage.tsx";
 import {CartPage} from "@/pages/CartPage.tsx";
 import {CheckoutPage} from "@/pages/CheckoutPage.tsx";
 import {OrderSuccessPage} from "@/pages/OrderSuccessPage.tsx";
+import {ProfileEditPage} from "@/pages/ProfileEditPage.tsx";
 
 const routes = [
   {
@@ -33,6 +34,7 @@ const routes = [
             element: <ProfileLayout />,
             children: [
               { index: true, element: <ProfilePage /> },
+              { path: 'edit', element: <ProfileEditPage /> },
               { path: 'orders', element: <OrdersPage /> },
               { path: 'cart', element: <CartPage /> },
             ],

@@ -4,17 +4,25 @@ import {CommonInput} from "@/components/ui/base/inputs/CommonInput";
 import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue
 } from "@/components/ui/lib/select";
-import {Button} from "@/components/ui/lib/button.tsx";
 import {useFormErrors} from "@/hooks/useFormErrors.ts";
 import {composeValidators, validateAddress, validateRequired} from "@/utils/validation.ts";
-import type {DeliveryMethod} from "@/types";
+import type {DeliveryMethod, PickupPoint} from "@/types";
 
 interface DeliveryMethodCardProps {
     onChange: (m: DeliveryMethod) => void;
     onAddressChange: (val: string) => void;
+    points: PickupPoint[];
+    selectedPickupPointId: string | null;
+    onPickupPointChange: (id: string) => void;
 }
 
-export function DeliveryMethodCard({ onChange, onAddressChange }: DeliveryMethodCardProps) {
+export function DeliveryMethodCard({
+                                       onChange,
+                                       onAddressChange,
+                                       points,
+                                       selectedPickupPointId,
+                                       onPickupPointChange
+                                   }: DeliveryMethodCardProps) {
     const [method, setMethod] = useState<"courier" | "pickup">("courier");
     const [city, setCity] = useState<string>("moscow");
 
@@ -42,6 +50,8 @@ export function DeliveryMethodCard({ onChange, onAddressChange }: DeliveryMethod
         }
     };
 
+    const currentPickupPoint = points.find(p => p.id === selectedPickupPointId);
+
     return (
         <ShadowContainer className="p-4">
             <h2 className="text-lg font-bold mb-4 text-black">Способ доставки</h2>
@@ -49,6 +59,7 @@ export function DeliveryMethodCard({ onChange, onAddressChange }: DeliveryMethod
             <div className="flex flex-col gap-4">
                 <div className="grid grid-cols-2 gap-3">
                     <button
+                        data-testid="courier-tab"
                         onClick={() => handleMethodSelect("courier")}
                         className={`w-full px-3 py-2 rounded-lg text-sm transition-all border-2 ${
                             method === "courier"
@@ -59,6 +70,7 @@ export function DeliveryMethodCard({ onChange, onAddressChange }: DeliveryMethod
                         Курьером
                     </button>
                     <button
+                        data-testid="pickup-tab"
                         onClick={() => handleMethodSelect("pickup")}
                         className={`w-full px-3 py-2 rounded-lg text-sm transition-all border-2 ${
                             method === "pickup"
@@ -94,17 +106,31 @@ export function DeliveryMethodCard({ onChange, onAddressChange }: DeliveryMethod
                     </div>
                 ) : (
                     <div className="flex items-center gap-4">
-                        <Button
-                            variant="outlineBlue"
-                            size="lg"
-                            className="mt-4"
-                        >
-                            Выбрать на карте
-                        </Button>
+                        <div className="h-10">
+                            <Select
+                                value={selectedPickupPointId || ""}
+                                onValueChange={onPickupPointChange}
+                            >
+                                <SelectTrigger className="w-50 py-5 bg-white border-gray-200">
+                                    <SelectValue placeholder="Выберите пункт выдачи" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <>
+                                        {points.map((point) => (
+                                            <SelectItem key={point.id} value={point.id}>
+                                                {point.name}
+                                            </SelectItem>
+                                        ))}
+                                    </>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        {currentPickupPoint && (
                         <div className="flex flex-col">
-                            <span className="font-medium text-black">Москва, Арбат 12</span>
+                            <span className="font-medium text-black">{currentPickupPoint.address}</span>
                             <span className="text-sm text-gray-600">Время работы 9:00 - 21:00</span>
                         </div>
+                        )}
                     </div>
                 )}
 

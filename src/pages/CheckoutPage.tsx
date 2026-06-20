@@ -5,7 +5,7 @@ import {useAppSelector} from "@/store/store";
 import {DeliveryMethodCard} from "@/components/modules/checkout/forms/DeliveryMethodCard.tsx";
 import {CustomerInfoCard} from "@/components/modules/checkout/forms/CustomerInfoCard.tsx";
 import {CheckoutSummary} from "@/components/modules/checkout/CheckoutSummary.tsx";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useCreateOrderMutation} from "@/api/ordersApi.ts";
 import {useState} from "react";
 import type {DeliveryMethod, Order, PaymentMethod} from "@/types";
@@ -18,7 +18,7 @@ export function CheckoutPage() {
     const userId = useAppSelector((state) => state.user.userId);
 
     const { data: user } = useGetProfileQuery(userId || '', { skip: !userId });
-    const {data: cartItems = []} = useGetCartQuery(userId || '', {skip: !userId});
+    const {data: cartItems = [], isLoading: isCartLoading} = useGetCartQuery(userId || '', {skip: !userId});
     const {data: points = []} = useGetPickupPointsQuery();
 
     const [createOrder] = useCreateOrderMutation();
@@ -30,18 +30,18 @@ export function CheckoutPage() {
     const [phone, setPhone] = useState("");
     const [comment, setComment] = useState("");
     const [addressStr, setAddressStr] = useState("");
+    const [selectedPickupPointId, setSelectedPickupPointId] = useState<string | null>(null);
 
     const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-    const pickupPointId = deliveryMethod === 'pickup_point' && points.length > 0
-        ? points[0].id
-        : undefined;
-
-    const isFormValid = phone !== "" && (deliveryMethod === 'pickup_point' || addressStr !== "");
+    const isFormValid = totalItems > 0 && phone !== "" && (
+        (deliveryMethod === 'courier' && addressStr !== "") ||
+        (deliveryMethod === 'pickup_point' && selectedPickupPointId !== null)
+    );
 
     const handleCreateOrder = async () => {
-        if (!user) return;
+        if (!user || totalItems === 0) return;
 
         const fullOrder: Order = {
             id: crypto.randomUUID(),
@@ -59,7 +59,7 @@ export function CheckoutPage() {
             paymentMethod,
             deliveryMethod,
             deliveryAddress: deliveryMethod === 'courier' ? parseAddressString(addressStr) : undefined,
-            pickupPointId,
+            pickupPointId: deliveryMethod === 'pickup_point' ? selectedPickupPointId || undefined : undefined,
             customer: {
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -81,6 +81,18 @@ export function CheckoutPage() {
         }
     };
 
+    if (!isCartLoading && cartItems.length === 0) {
+        return (
+            <div className="max-w-md mx-auto py-16 px-4 text-center">
+                <HeadingText className="text-2xl mb-4">Ваша корзина пуста</HeadingText>
+                <p className="text-gray-600 mb-6">Для оформления заказа добавьте товары из каталога.</p>
+                <Link to="/" className="inline-block bg-blue-900 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-800 transition-colors">
+                    Перейти в каталог
+                </Link>
+            </div>
+        );
+    }
+
     return (
         <div className="max-w-6xl mx-auto py-8 px-4 pb-42">
             <HeadingText className="text-3xl mb-8">Оформление заказа</HeadingText>
@@ -89,7 +101,13 @@ export function CheckoutPage() {
 
                 <div className="lg:col-span-2 flex flex-col gap-6">
                     <PaymentMethodCard onChange={setPaymentMethod}/>
-                    <DeliveryMethodCard onAddressChange={setAddressStr} onChange={setDeliveryMethod}/>
+                    <DeliveryMethodCard
+                        onAddressChange={setAddressStr}
+                        onChange={setDeliveryMethod}
+                        points={points}
+                        selectedPickupPointId={selectedPickupPointId}
+                        onPickupPointChange={setSelectedPickupPointId}
+                    />
                     <CustomerInfoCard onPhoneChange={setPhone} onCommentChange={setComment}/>
                 </div>
 
